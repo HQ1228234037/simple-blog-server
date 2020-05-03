@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hq.simpleblog.mapper.ArticleTypeMapper">
+
+    <resultMap type="com.hq.simpleblog.entity.ArticleTypeEntity" id="ArticleTypeMap">
+        <result property="articleTypeId" column="article_type_id" jdbcType="INTEGER"/>
+        <result property="articleTypeName" column="article_type_name" jdbcType="VARCHAR"/>
+        <result property="deleted" column="deleted" jdbcType="OTHER"/>
+        <result property="createDate" column="create_date" jdbcType="TIMESTAMP"/>
+        <result property="updateDate" column="update_date" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="insertColumns">
+        <trim suffix="" suffixOverrides=",">
+            <if test="articleTypeId != null">
+                articleTypeId,
+            </if>
+            <if test="articleTypeName != null and articleTypeName != ''">
+                articleTypeName,
+            </if>
+            <if test="deleted != null">
+                deleted,
+            </if>
+            <if test="createDate != null">
+                createDate,
+            </if>
+            <if test="updateDate != null">
+                updateDate,
+            </if>
+        </trim>
+    </sql>
+
+    <sql id="insertParams">
+        <trim suffix="" suffixOverrides=",">
+            <if test="articleTypeId != null">
+                #{articleTypeId},
+            </if>
+            <if test="articleTypeName != null and articleTypeName != ''">
+                #{articleTypeName},
+            </if>
+            <if test="deleted != null">
+                #{deleted},
+            </if>
+            <if test="createDate != null">
+                #{createDate},
+            </if>
+            <if test="updateDate != null">
+                #{updateDate},
+            </if>
+        </trim>
+    </sql>
+
+    <sql id="updateParams">
+        <trim suffix="" suffixOverrides=",">
+            <if test="articleTypeId != null">
+                articleTypeId = #{articleTypeId}
+            </if>
+            <if test="articleTypeName != null and articleTypeName != ''">
+                articleTypeName = #{articleTypeName}
+            </if>
+            <if test="deleted != null">
+                deleted = #{deleted}
+            </if>
+            <if test="createDate != null">
+                createDate = #{createDate}
+            </if>
+            <if test="updateDate != null">
+                updateDate = #{updateDate}
+            </if>
+        </trim>
+    </sql>
+
+    <!-- 查询单个 -->
+    <select id="getById" resultMap="ArticleTypeMap">
+        select
+        article_type_id, article_type_name, deleted, create_date, update_date
+        from hq_blog.hq_article_type
+        where deleted = 0 and article_type_id = #{articleTypeId}
+    </select>
+
+    <!-- 查询所有数据 -->
+    <select id="getAll" resultMap="ArticleTypeMap">
+        select
+        article_type_id, article_type_name, deleted, create_date, update_date
+        from hq_blog.hq_article_type
+        where deleted = 0
+    </select>
+
+    <!-- 通过实体作为筛选条件查询 -->
+    <select id="getByEntity" resultMap="ArticleTypeMap">
+        select
+        article_type_id, article_type_name, deleted, create_date, update_date
+        from hq_blog.hq_article_type
+        where deleted = 0
+        <if test="articleTypeId != null">
+            and article_type_id = #{articleTypeId}
+        </if>
+        <if test="articleTypeName != null and articleTypeName != ''">
+            and article_type_name = #{articleTypeName}
+        </if>
+        <if test="deleted != null">
+            and deleted = #{deleted}
+        </if>
+        <if test="createDate != null">
+            and create_date = #{createDate}
+        </if>
+        <if test="updateDate != null">
+            and update_date = #{updateDate}
+        </if>
+    </select>
+
+    <!-- 分页查询，通过实体作为筛选条件查询 -->
+    <select id="page" resultType="com.hq.simpleblog.entity.ArticleTypeEntity">
+        select
+        article_type_id, article_type_name, deleted, create_date, update_date
+        from hq_blog.hq_article_type
+        where deleted = 0
+        <if test="articleTypeId != null">
+            and article_type_id = #{articleTypeId}
+        </if>
+        <if test="articleTypeName != null and articleTypeName != ''">
+            and article_type_name = #{articleTypeName}
+        </if>
+        <if test="deleted != null">
+            and deleted = #{deleted}
+        </if>
+        <if test="createDate != null">
+            and create_date = #{createDate}
+        </if>
+        <if test="updateDate != null">
+            and update_date = #{updateDate}
+        </if>
+    </select>
+
+    <!-- 新增所有列 -->
+    <insert id="insert" keyProperty="articleTypeId" useGeneratedKeys="true">
+        insert into hq_blog.hq_article_type(<include refid="insertColumns"/>)
+        values (<include refid="insertParams"/>)
+    </insert>
+
+    <!-- 通过主键修改数据 -->
+    <update id="update">
+        update hq_blog.hq_article_type
+        <set>
+            <include refid="updateParams"/>
+        </set>
+        where deleted = 0 and article_type_id = #{articleTypeId}
+    </update>
+
+    <!-- 通过主键删除 -->
+    <delete id="deleteById">
+        delete from hq_blog.hq_article_type where deleted = 0 and article_type_id = #{articleTypeId}
+    </delete>
+
+</mapper>

@@ -1,0 +1,24 @@
+server:
+  port: 8080
+spring:
+  datasource:
+    username: root
+    password: 123456
+    url: jdbc:mysql://192.168.1.5:3306/hq_blog?useSSL=false&serverTimezone=GMT%2b8&characterEncoding=utf-8&allowPublicKeyRetrieval=true
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+  redis:
+    host: 192.168.1.5
+    port: 6379
+  session:
+    store-type: redis
+mybatis:
+  mapper-locations: mapper/*Mapper.xml
+  type-aliases-package: com.hq.simpleblog.entity
+  configuration:
+    map-underscore-to-camel-case: true
+pagehelper:
+  reasonable: true
+  helper-dialect: mysql
+  support-methods-arguments: true
+accessControlAllowOrigins: http://127.0.0.1:8081,http://localhost:8081
